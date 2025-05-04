@@ -10,11 +10,11 @@ llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash", google_api_key=api_key)
 prompt = PromptTemplate(
     input_variables=["genre", "paragraph", "language", "min_rating", "excluded_list"],
     template=(
-        "Recommend a lesser-known but high-quality movie in the {genre} genre with an IMDb rating of at least {min_rating}. "
-        "{% if excluded_list %}Exclude the following movies from your recommendation: {excluded_list}. {% endif %}"
-        "Avoid blockbuster or overly popular mainstream titles. Prioritize hidden gems, festival favorites, international cinema, or auteur-directed works "
-        "that are critically acclaimed but not widely known. "
-        "Summarize the recommended film in {paragraph} short paragraph(s) in {language}."
+    "Recommend a lesser-known but high-quality movie in the {genre} genre with an IMDb rating of at least {min_rating}. "
+    "{excluded_clause}"
+    "Avoid blockbuster or overly popular mainstream titles. Prioritize hidden gems, festival favorites, international cinema, or auteur-directed works "
+    "that are critically acclaimed but not widely known. "
+    "Summarize the recommended film in {paragraph} short paragraph(s) in {language}."
     ),
 )
 
