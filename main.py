@@ -8,13 +8,13 @@ llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash", google_api_key=api_key)
 
 
 prompt = PromptTemplate(
-    input_variables=["genre", "paragraph", "language", "min_rating", "excluded_list"],
+    input_variables=["genre", "paragraph", "language", "min_rating", "excluded_clause"],
     template=(
-    "Recommend a lesser-known but high-quality movie in the {genre} genre with an IMDb rating of at least {min_rating}. "
-    "{excluded_clause}"
-    "Avoid blockbuster or overly popular mainstream titles. Prioritize hidden gems, festival favorites, international cinema, or auteur-directed works "
-    "that are critically acclaimed but not widely known. "
-    "Summarize the recommended film in {paragraph} short paragraph(s) in {language}."
+        "Recommend a lesser-known but high-quality movie in the {genre} genre with an IMDb rating of at least {min_rating}. "
+        "{excluded_clause}"
+        "Avoid blockbuster or overly popular mainstream titles. Prioritize hidden gems, festival favorites, international cinema, or auteur-directed works "
+        "that are critically acclaimed but not widely known. "
+        "Summarize the recommended film in {paragraph} short paragraph(s) in {language}."
     ),
 )
 
@@ -26,15 +26,16 @@ language = st.text_input("🌍 Language")
 min_rating = st.number_input("⭐️ Minimum IMDb Rating", min_value=0.0, max_value=10.0, value=7.0, step=0.1)
 excluded_input = st.text_input("🚫 Exclude These Movies (Separate titles with commas)")
 
-if genre and paragraph and language and excluded_input:
+if genre and paragraph and language:
     excluded_list = ", ".join([movie.strip() for movie in excluded_input.split(",") if movie.strip()])
-    
+    excluded_clause = f"Exclude the following movies from your recommendation: {excluded_list}. " if excluded_list else ""
+
     query = prompt.format(
         genre=genre,
         paragraph=paragraph,
         language=language,
         min_rating=min_rating,
-        excluded_list=excluded_list
+        excluded_clause=excluded_clause
     )
 
     response = llm.invoke(query)
