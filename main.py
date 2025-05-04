@@ -13,7 +13,7 @@ prompt = PromptTemplate(
 )
 st.title("Movie Recommendation")
 genre = st.text_input("Genre")
-paragraph = st.number_input("Input Number of Paragraphs", min_value=1, max_value=5)
+paragraph = st.number_input("Input Number of Paragraphs (Summary)", min_value=1, max_value=5)
 language = st.text_input("Language")
 
 if genre and paragraph and language:
