@@ -11,7 +11,7 @@ prompt = PromptTemplate(
     input_variables=["genre", "paragraph", "language"],
     template="Can you recommend a movie that has the genre {genre} and summarize the movie in {paragraph} short paragraph(s) in the language {language}.",
 )
-
+st.title("Movie Recommendation")
 genre = st.text_input("Genre")
 paragraph = st.number_input("Input Number of Paragraphs", min_value=1, max_value=5)
 language = st.text_input("Language")
