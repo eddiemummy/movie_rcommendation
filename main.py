@@ -16,6 +16,10 @@ llm = ChatGoogleGenerativeAI(
 if "suggested_movies" not in st.session_state:
     st.session_state.suggested_movies = []
 
+if "trigger_new" not in st.session_state:
+    st.session_state.trigger_new = False
+
+
 st.title("🎬 Movie Recommendation")
 
 genre = st.text_input("🎭 Genre")
@@ -47,7 +51,7 @@ variety_hints = [
     "recommend animated films for adult audiences",
     "focus on psychological or philosophical themes",
     
-    # 🌏 regions
+    # regions
     "recommend only Asian films",
     "recommend only European films",
     "recommend only South American films",
@@ -55,16 +59,19 @@ variety_hints = [
     "focus on Eastern European cinema",
 ]
 
+if st.button("🔄 Refresh Recommendation"):
+    st.session_state.trigger_new = True
 
+if genre and paragraph and language and st.session_state.trigger_new:
+    st.session_state.trigger_new = False 
 
-random_hint = random.choice(variety_hints)
-
-if genre and paragraph and language:
     excluded_list = [movie.strip() for movie in manual_exclude.split(",") if movie.strip()]
     excluded_list += st.session_state.suggested_movies
     excluded_clause = (
         f"Exclude the following movies: {', '.join(set(excluded_list))}. " if excluded_list else ""
     )
+
+    random_hint = random.choice(variety_hints)
 
     prompt_template = PromptTemplate(
         input_variables=["genre", "paragraph", "language", "min_rating", "excluded_clause", "variety_hint"],
@@ -85,6 +92,7 @@ if genre and paragraph and language:
         excluded_clause=excluded_clause,
         variety_hint=random_hint
     )
+
     response = llm.invoke(query)
     content = response.content.strip()
 
