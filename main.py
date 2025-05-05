@@ -16,7 +16,7 @@ llm = ChatGoogleGenerativeAI(
 if "suggested_movies" not in st.session_state:
     st.session_state.suggested_movies = []
 
-st.title("🎬 Unique Movie Recommendation")
+st.title("🎬 Movie Recommendation")
 
 genre = st.text_input("🎭 Genre")
 paragraph = st.number_input("📝 Summary: Number of Paragraphs", min_value=1, max_value=5)
