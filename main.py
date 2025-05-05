@@ -69,6 +69,7 @@ if genre and paragraph and language:
     prompt_template = PromptTemplate(
         input_variables=["genre", "paragraph", "language", "min_rating", "excluded_clause", "variety_hint"],
         template=(
+            "Please do NOT start with commonly suggested movies.\n"
             "Recommend a unique, lesser-known but high-quality movie in the {genre} genre with an IMDb rating of at least {min_rating}. "
             "{excluded_clause}"
             "Avoid overly mainstream or over-recommended films. Instead, {variety_hint}. "
@@ -84,7 +85,6 @@ if genre and paragraph and language:
         excluded_clause=excluded_clause,
         variety_hint=random_hint
     )
-
     response = llm.invoke(query)
     content = response.content.strip()
 
@@ -93,8 +93,9 @@ if genre and paragraph and language:
 
     first_line = content.splitlines()[0]
     if first_line:
-        movie_title = first_line.split(".")[0].strip()
-        st.session_state.suggested_movies.append(movie_title)
+        movie_title = first_line.split(".")[0].strip("–-•* ")
+        if movie_title and movie_title not in st.session_state.suggested_movies:
+            st.session_state.suggested_movies.append(movie_title)
 
     st.subheader("🎥 Recommended Movie:")
     st.write(content)
