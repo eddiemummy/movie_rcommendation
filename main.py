@@ -4,7 +4,7 @@ import streamlit as st
 
 api_key = st.secrets["GOOGLE_GEMINI_KEY"]
 
-llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash", google_api_key=api_key, temperature=.5)
+llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash", google_api_key=api_key, temperature=.7)
 
 
 prompt = PromptTemplate(
