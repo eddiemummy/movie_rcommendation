@@ -11,6 +11,7 @@ prompt = PromptTemplate(
     input_variables=["genre", "paragraph", "language", "min_rating", "excluded_clause"],
     template=(
         "Recommend a lesser-known but high-quality movie in the {genre} genre with an IMDb rating of at least {min_rating}. "
+        "Do not repeat the same suggestions. Recommend a movie in the {genre} genre with an IMDb rating of at least {min_rating}. "
         "{excluded_clause}"
         "Avoid blockbuster or overly popular mainstream titles. Prioritize hidden gems, festival favorites, international cinema, or auteur-directed works "
         "that are critically acclaimed but not widely known. "
