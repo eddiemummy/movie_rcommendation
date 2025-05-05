@@ -21,6 +21,20 @@ if "trigger_new" not in st.session_state:
 
 
 st.title("🎬 Movie Recommendation")
+st.markdown("""
+### ℹ️ Açıklama / About
+
+💡 **Önerilen film listesi** geçici olarak tarayıcı belleğinde saklanır. Bu sayede aynı filmi tekrar önermemeye çalışır.  
+🔄 "Refresh Recommendation" butonuna tıklayarak aynı ayarlarla yeni bir film önerisi alabilirsiniz.  
+🌐 Sayfayı yenilerseniz önceki öneriler sıfırlanır.
+
+---
+
+💡 The **suggested movies** are temporarily stored in your browser's memory during this session  
+🔄 You can click the "Refresh Recommendation" button to get a new recommendation using the same filters.  
+🌐 If you refresh the page, the previous suggestions will be cleared.
+""")
+
 
 genre = st.text_input("🎭 Genre")
 paragraph = st.number_input("📝 Summary: Number of Paragraphs", min_value=1, max_value=5)
